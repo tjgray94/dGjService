@@ -50,7 +50,7 @@ public class OrderController {
             LocalDateTime orderTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
             String formattedOrderTime = orderTime.format(formatter);
-            Order _order = orderRepository.save(new Order(order.getProducts(), formattedOrderTime));
+            Order _order = orderRepository.save(new Order(order.getProducts(), order.getTotal(), order.getName(), order.getAddress(), formattedOrderTime));
             return new ResponseEntity<>(_order, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,6 +63,8 @@ public class OrderController {
 
         if (orderData.isPresent()) {
             Order _order = orderData.get();
+            _order.setName(order.getName());
+            _order.setAddress(order.getAddress());
             LocalDateTime orderTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
             String formattedOrderTime = orderTime.format(formatter);

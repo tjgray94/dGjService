@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.dGjCreations.model.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
+    List<Order> findByName(String name);
     List<Order> findByOrderTime(String orderTime);
 }

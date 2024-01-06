@@ -26,11 +26,20 @@ public class Order {
     private int orderId;
     @Column(name = "products")
     private List<String> products;
+    @Column(name = "total")
+    private double total;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "address")
+    private String address;
     @Column(name = "order_time")
     private String orderTime;
 
-    public Order(List<String> products, String orderTime) {
+    public Order(List<String> products, double total, String name, String address, String orderTime) {
         this.products = products;
+        this.total = total;
+        this.name = name;
+        this.address = address;
         this.orderTime = orderTime;
     }
 }
