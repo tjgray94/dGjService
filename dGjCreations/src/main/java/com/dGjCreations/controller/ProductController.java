@@ -66,6 +66,19 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/products/{productId}/updateQuantity")
+    public ResponseEntity<Product> updateProductQuantity(@PathVariable("productId") int productId, @RequestBody Product product) {
+        Optional<Product> productData = productRepository.findById(productId);
+
+        if (productData.isPresent()) {
+            Product _product = productData.get();
+            _product.setQuantity(product.getQuantity());
+            return new ResponseEntity<>(productRepository.save(_product), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("productId") int productId) {
         try {
