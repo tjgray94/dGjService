@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dGjCreations.model.Product;
 import com.dGjCreations.repository.ProductRepository;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
@@ -53,16 +54,20 @@ public class ProductController {
 
     @PutMapping("/products/{productId}")
     public ResponseEntity<Product> updateProduct(@PathVariable("productId") int productId, @RequestBody Product product) {
-        Optional<Product> productData = productRepository.findById(productId);
+        try {
+            Optional<Product> productData = productRepository.findById(productId);
 
-        if (productData.isPresent()) {
-            Product _product = productData.get();
-            _product.setName(product.getName());
-            _product.setPrice(product.getPrice());
-            _product.setQuantity(product.getQuantity());
-            return new ResponseEntity<>(productRepository.save(_product), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (productData.isPresent()) {
+                Product _product = productData.get();
+                _product.setName(product.getName());
+                _product.setPrice(product.getPrice());
+                _product.setQuantity(product.getQuantity());
+                return new ResponseEntity<>(productRepository.save(_product), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -34,12 +34,15 @@ public class Order {
     private String address;
     @Column(name = "order_time")
     private String orderTime;
+    @Column(name = "payment_type")
+    private String paymentType;
 
-    public Order(List<String> products, double total, String name, String address, String orderTime) {
+    public Order(List<String> products, double total, String name, String address, String orderTime, String paymentType) {
         this.products = products;
         this.total = total;
         this.name = name;
         this.address = address;
         this.orderTime = orderTime;
+        this.paymentType = paymentType;
     }
 }
